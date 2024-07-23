@@ -1,0 +1,189 @@
+ <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculatrice de Cycle Menstruel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fef7f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #e91e63;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #e91e63;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #e91e63;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #c2185b;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fce4ec;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .note {
+            margin-top: 100px; /* Augmenter la marge en haut pour déplacer la note encore plus bas */
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-left: 6px solid #e91e63;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #555;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .social-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .social-icons a {
+            margin: 0 10px;
+        }
+
+        .social-icons img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .made-by {
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculatrice de Cycle Menstruel</h1>
+        <form id="ovulationForm">
+            <div class="form-group">
+                <label for="lastPeriod">Date des dernières règles :</label>
+                <input type="date" id="lastPeriod" required>
+            </div>
+            <div class="form-group">
+                <label for="cycleLength">Longueur du cycle (en jours) :</label>
+                <input type="number" id="cycleLength" required>
+            </div>
+            <div class="form-group">
+                <label for="periodLength">Durée des règles (en jours) :</label>
+                <input type="number" id="periodLength" required>
+            </div>
+            <button type="submit">Calculer</button>
+        </form>
+        <div id="result" class="hidden">
+            <div id="resultContent"></div>
+        </div>
+        <div class="note">
+            <p><strong>Note importante :</strong> Les résultats fournis par ce calculateur sont des estimations basées sur les informations fournies. Ils peuvent ne pas être précis en raison de divers facteurs tels que des variations dans le cycle menstruel ou des conditions médicales spécifiques. Il est toujours recommandé de consulter un professionnel de santé pour obtenir des conseils personnalisés et précis.</p>
+        </div>
+        <div class="social-container">
+            <div class="made-by">Réalisé par Fbo</div>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/fbo_le_sheild/" target="_blank" title="Instagram">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const lastPeriod = dayjs(document.getElementById('lastPeriod').value);
+            const cycleLength = parseInt(document.getElementById('cycleLength').value);
+            const periodLength = parseInt(document.getElementById('periodLength').value);
+
+            if (!lastPeriod.isValid() || isNaN(cycleLength) || isNaN(periodLength)) {
+                alert('Veuillez entrer des données valides.');
+                return;
+            }
+
+            const ovulationDay = lastPeriod.add(cycleLength - 14, 'day');
+            const fertileStart = ovulationDay.subtract(5, 'day');
+            const fertileEnd = ovulationDay.add(1, 'day');
+            const nextPeriodStart = lastPeriod.add(cycleLength, 'day');
+            const nextPeriodEnd = nextPeriodStart.add(periodLength, 'day');
+
+            const resultHtml = `
+                <p><strong>Prochaine ovulation :</strong> ${ovulationDay.format('DD/MM/YYYY')}</p>
+                <p><strong>Période fertile :</strong> du ${fertileStart.format('DD/MM/YYYY')} au ${fertileEnd.format('DD/MM/YYYY')}</p>
+                <p><small>Note: Les spermatozoïdes peuvent survivre jusqu'à trois à cinq jours dans le corps de la femme. Par conséquent, des rapports sexuels non ou mal protégés ayant eu lieu dans les 3 à 5 jours avant le début de la période de fertilité peuvent entraîner une grossesse.</small></p>
+                <p><strong>Prochaines règles :</strong> du ${nextPeriodStart.format('DD/MM/YYYY')} au ${nextPeriodEnd.format('DD/MM/YYYY')}</p>
+            `;
+            document.getElementById('resultContent').innerHTML = resultHtml;
+            document.getElementById('result').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
+
