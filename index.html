@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -120,6 +120,12 @@
             margin-bottom: 10px;
             font-weight: bold;
         }
+
+        .contact-info {
+            color: #e91e63;
+            font-weight: bold;
+            margin-bottom: 20px; /* Ajoute un espace entre la section de contact et "Réalisé par Fbo" */
+        }
     </style>
 </head>
 <body>
@@ -127,11 +133,11 @@
         <h1>Calculatrice de Cycle Menstruel</h1>
         <form id="ovulationForm">
             <div class="form-group">
-                <label for="lastPeriod">Date des dernières règles :</label>
+                <label for="lastPeriod">Date debut des dernières règles :</label>
                 <input type="date" id="lastPeriod" required>
             </div>
             <div class="form-group">
-                <label for="cycleLength">Longueur du cycle (en jours) :</label>
+                <label for="cycleLength"> Durée du cycle (en jours) :</label>
                 <input type="number" id="cycleLength" required>
             </div>
             <div class="form-group">
@@ -147,6 +153,7 @@
             <p><strong>Note importante :</strong> Les résultats fournis par ce calculateur sont des estimations basées sur les informations fournies. Ils peuvent ne pas être précis en raison de divers facteurs tels que des variations dans le cycle menstruel ou des conditions médicales spécifiques. Il est toujours recommandé de consulter un professionnel de santé pour obtenir des conseils personnalisés et précis.</p>
         </div>
         <div class="social-container">
+            <div class="contact-info">Pour plus d'informations, veuillez contacter l'infirmière OUMOU au +22898713368.</div>
             <div class="made-by">Réalisé par Fbo</div>
             <div class="social-icons">
                 <a href="https://www.instagram.com/fbo_le_sheild/" target="_blank" title="Instagram">
@@ -186,3 +193,4 @@
     </script>
 </body>
 </html>
+
